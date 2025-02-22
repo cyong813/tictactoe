@@ -2,11 +2,11 @@
 
 import { Stage, Layer, Rect, Text } from 'react-konva'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Konva from 'konva'
 import styles from './page.module.css'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { Shape } from 'konva/lib/Shape'
+import { getBoard, updateBoard } from '../api'
 
 export default function Home() {
     const [isLoading, setLoading] = useState(true)
@@ -18,16 +18,12 @@ export default function Home() {
         shape.fill('white')
         e.cancelBubble = true
         if (['X', 'O'].includes(board[r][c])) return // do nothing when board cell is already filled
-        axios.post('http://127.0.0.1:8000/play', {
-            currentPlayer: 'X',
-            row: r,
-            column: c
-        })
-            .then(function (response) {
+        updateBoard('X', r, c)
+            .then((response) => {
                 setBoard(response.data.board)
                 setCurrentPlayer(response.data.currentPlayer)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error)
             })
     }
@@ -98,13 +94,13 @@ export default function Home() {
     }
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/game')
-            .then(function (response) {
+        getBoard
+            .then((response) => {
                 // handle success
                 setBoard(response.data.board)
                 setCurrentPlayer(response.data.currentPlayer)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 // handle error
             })
     }, [])

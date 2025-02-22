@@ -1,12 +1,12 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import cors from 'cors'
 
 const app = express()
-const port = 8000
+const PORT = 8000
 
 app.use(cors())
 
-app.get('/game', (req, res) => {
+app.get('/game', (req: Request, res: Response) => {
     res.send({
         score: 0,
         board: [['X', 'O', 'O'],['X', 'X', 'O'],['X','','']],
@@ -14,7 +14,7 @@ app.get('/game', (req, res) => {
     })
 })
 
-app.post('/play', (req, res) => {
+app.post('/play', (req: Request, res: Response) => {
     // const { currentPlayer, row, column } = req.body
     res.send({
         score: 0,
@@ -23,6 +23,6 @@ app.post('/play', (req, res) => {
     })
 })
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`)
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
 })
