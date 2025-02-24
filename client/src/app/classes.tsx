@@ -7,7 +7,7 @@ const Player = {
     play: (row, column) => {}
 }
 
-const Game = {
+const Classes = {
     startGame: () => {},
     endGame: () => {},
     addToScore: () => {},
